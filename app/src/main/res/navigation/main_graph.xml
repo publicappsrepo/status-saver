@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/imagesFragment">
+
+    <fragment
+        android:id="@+id/imagesFragment"
+        android:name="com.appsease.status.saver.fragments.statuses.ImageStatusesFragment"
+        android:label="HomeFragment"/>
+
+    <fragment
+        android:id="@+id/videosFragment"
+        android:name="com.appsease.status.saver.fragments.statuses.VideoStatusesFragment"
+        android:label="HomeFragment"/>
+
+    <fragment
+        android:id="@+id/savedFragment"
+        android:name="com.appsease.status.saver.fragments.statuses.SavedStatusesFragment"
+        android:label="SavedFragment"/>
+
+    <fragment
+        android:id="@+id/toolsFragment"
+        android:name="com.appsease.status.saver.fragments.ToolFragment"
+        android:label="ToolsFragment"/>
+
+    <fragment
+        android:id="@+id/messageFragment"
+        android:name="com.appsease.status.saver.fragments.message.MessageFragment"
+        android:label="MessageFragment"/>
+
+    <fragment
+        android:id="@+id/conversationsFragment"
+        android:name="com.appsease.status.saver.fragments.messageview.ConversationListFragment"
+        android:label="ConversationListFragment"/>
+
+    <fragment
+        android:id="@+id/messagesFragment"
+        android:name="com.appsease.status.saver.fragments.messageview.ConversationDetailFragment"
+        android:label="ConversationDetailFragment">
+        <argument
+            android:name="extra_conversation"
+            app:argType="com.appsease.status.saver.database.Conversation"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/messageViewTermsFragment"
+        android:name="com.appsease.status.saver.fragments.messageview.MessageViewTermsFragment"
+        android:label="MessageViewTerms"/>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.appsease.status.saver.fragments.SettingsFragment"
+        android:label="SettingsFragment"/>
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.appsease.status.saver.fragments.AboutFragment"
+        android:label="AboutFragment"/>
+
+    <fragment
+        android:id="@+id/onboardFragment"
+        android:name="com.appsease.status.saver.fragments.onboard.OnboardFragment"
+        android:label="OnboardFragment">
+        <argument
+            android:name="isFromSettings"
+            app:argType="boolean"
+            android:defaultValue="false"/>
+    </fragment>
+
+</navigation>

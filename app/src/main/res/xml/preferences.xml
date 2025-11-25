@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:layout="@layout/preference_category_title"
+        android:title="@string/settings_interface">
+
+        <ListPreference
+            android:layout="@layout/list_item_view"
+            android:icon="@drawable/ic_contrast_24dp"
+            android:title="@string/theme_mode_title"
+            android:entries="@array/theme_mode_titles"
+            android:entryValues="@array/theme_mode_values"
+            android:defaultValue="auto"
+            app:useSimpleSummaryProvider="true"
+            android:key="theme_mode"/>
+
+        <SwitchPreferenceCompat
+            android:layout="@layout/list_item_view_switch_no_title"
+            android:title="@string/just_black_theme_title"
+            android:defaultValue="false"
+            android:key="just_black_theme"/>
+
+        <SwitchPreferenceCompat
+            android:layout="@layout/list_item_view_switch_no_title"
+            android:title="@string/use_custom_font_title"
+            android:defaultValue="true"
+            android:key="use_custom_font"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout="@layout/preference_category_title"
+        android:title="@string/settings_statuses">
+
+        <com.appsease.status.saver.preferences.StoragePreference
+            android:layout="@layout/list_item_view"
+            android:icon="@drawable/ic_storage_24dp"
+            android:title="@string/statuses_location_title"
+            android:summary="@string/statuses_location_summary"
+            android:key="statuses_location"/>
+
+        <com.appsease.status.saver.preferences.SaveLocationPreference
+            android:layout="@layout/list_item_view"
+            android:icon="@drawable/ic_folder_24dp"
+            android:title="@string/save_location_title"
+            android:summary="@string/save_location_summary"
+            android:key="preferred_save_location"/>
+
+        <SwitchPreferenceCompat
+            android:layout="@layout/list_item_view_switch"
+            android:icon="@drawable/ic_save_alt_24dp"
+            android:title="@string/exclude_saved_statuses_title"
+            android:summary="@string/exclude_saved_statuses_summary"
+            android:defaultValue="false"
+            android:key="exclude_saved_statuses"/>
+
+        <SwitchPreferenceCompat
+            android:layout="@layout/list_item_view_switch"
+            android:icon="@drawable/ic_delete_24dp"
+            android:title="@string/quick_deletion_title"
+            android:summary="@string/quick_deletion_summary"
+            android:defaultValue="false"
+            android:key="quick_deletion"/>
+
+        <com.appsease.status.saver.preferences.DefaultClientPreference
+            android:layout="@layout/list_item_view"
+            android:title="@string/default_client_title"
+            android:summary="@string/default_client_summary"
+            android:key="default_client"/>
+
+        <Preference
+            android:layout="@layout/list_item_view"
+            android:icon="@drawable/ic_lock_open_24dp"
+            android:title="@string/review_permissions_title"
+            android:summary="@string/review_permissions_summary"
+            android:key="grant_permissions"
+            android:persistent="false"
+            app:isPreferenceVisible="false"/>
+
+        <SwitchPreferenceCompat
+            android:layout="@layout/list_item_view_switch"
+            android:title="@string/whatsapp_icon_title"
+            android:summary="@string/whatsapp_icon_summary"
+            android:defaultValue="false"
+            android:key="whatsapp_icon"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout="@layout/preference_category_title"
+        android:title="@string/advanced">
+
+        <SwitchPreferenceCompat
+            android:layout="@layout/list_item_view_switch"
+            android:icon="@drawable/ic_wifi_24dp"
+            android:title="@string/only_wifi_title"
+            android:summary="@string/only_wifi_summary"
+            android:defaultValue="false"
+            android:key="update_only_wifi"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout="@layout/preference_category_title"
+        android:title="@string/information">
+
+        <Preference
+            android:layout="@layout/list_item_view"
+            android:icon="@drawable/ic_rate_us"
+            android:title="@string/rate_us"
+            android:summary="@string/rate_us_summary"
+            android:key="rateus"
+            android:persistent="false"/>
+
+        <Preference
+            android:layout="@layout/list_item_view"
+            android:icon="@drawable/ic_info_24dp"
+            android:title="@string/about_title"
+            android:summary="@string/about_summary"
+            android:key="about"
+            android:persistent="false"/>
+
+        <Preference
+            android:layout="@layout/list_item_view"
+            android:icon="@drawable/ic_privacy_tip_24dp"
+            android:title="@string/privacy_and_terms"
+            android:key="privacy_policy"
+            android:persistent="false"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

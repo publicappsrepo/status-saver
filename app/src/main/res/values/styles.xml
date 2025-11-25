@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<resources>
+    <!-- WIDGETS STYLES -->
+    <style name="MaterialButtonStyle" parent="Widget.Material3.Button">
+        <item name="iconGravity">textStart</item>
+        <item name="android:paddingTop">@dimen/button_padding_vertical</item>
+        <item name="android:paddingBottom">@dimen/button_padding_vertical</item>
+    </style>
+
+    <style name="ToolbarStyle" parent="Widget.Material3.Toolbar">
+        <item name="android:transitionName">@string/transition_toolbar</item>
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="popupTheme">?toolbarPopupTheme</item>
+        <item name="titleMarginStart">16dp</item>
+    </style>
+
+    <style name="CollapsingToolbarMediumStyle" parent="Widget.Material3.CollapsingToolbar.Medium">
+        <item name="collapsedTitleTextAppearance">?textAppearanceTitleLarge</item>
+        <item name="collapsedTitleTextColor">?attr/colorOnSurface</item>
+        <item name="expandedTitleTextAppearance">?textAppearanceHeadlineLarge</item>
+        <item name="expandedTitleTextColor">?attr/colorOnSurface</item>
+        <item name="expandedTitleMarginStart">24dp</item>
+        <item name="titleCollapseMode">scale</item>
+    </style>
+
+    <style name="BottomNavigationStyle" parent="Widget.Material3.BottomNavigationView"/>
+
+    <style name="ToolCardViewStyle" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardCornerRadius">@dimen/m3_card_corner_radius</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.Circular" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="lib_material_rating_style" parent="Widget.AppCompat.RatingBar">
+        <item name="android:progressDrawable">@drawable/lib_material_icon_ratingbar</item>
+        <item name="android:indeterminateDrawable">@drawable/lib_material_icon_ratingbar</item>
+    </style>
+
+
+</resources>

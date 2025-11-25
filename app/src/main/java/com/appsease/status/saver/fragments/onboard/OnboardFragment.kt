@@ -1,0 +1,231 @@
+
+package com.appsease.status.saver.fragments.onboard
+
+import android.annotation.SuppressLint
+import android.content.DialogInterface
+import android.net.Uri
+import android.os.Bundle
+import android.view.View
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.doOnPreDraw
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.transition.MaterialFadeThrough
+import com.appsease.status.saver.R
+import com.appsease.status.saver.WhatSaveViewModel
+import com.appsease.status.saver.databinding.DialogSafTutorialBinding
+import com.appsease.status.saver.databinding.FragmentOnboardBinding
+import com.appsease.status.saver.extensions.IsSAFRequired
+import com.appsease.status.saver.extensions.Space
+import com.appsease.status.saver.extensions.applyWindowInsets
+import com.appsease.status.saver.extensions.formattedAsHtml
+import com.appsease.status.saver.extensions.getOnBackPressedDispatcher
+import com.appsease.status.saver.extensions.getReadableDirectories
+import com.appsease.status.saver.extensions.hasPermissions
+import com.appsease.status.saver.extensions.hasSAFPermissions
+import com.appsease.status.saver.extensions.hasStoragePermissions
+import com.appsease.status.saver.extensions.releasePermissions
+import com.appsease.status.saver.extensions.requestWithoutOnboard
+import com.appsease.status.saver.extensions.showToast
+import com.appsease.status.saver.extensions.takePermissions
+import com.appsease.status.saver.fragments.base.BaseFragment
+import com.appsease.status.saver.fragments.binding.OnboardBinding
+import com.appsease.status.saver.interfaces.IPermissionChangeListener
+import com.appsease.status.saver.model.WaDirectory
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
+
+class OnboardFragment : BaseFragment(R.layout.fragment_onboard), View.OnClickListener,
+    IPermissionChangeListener {
+
+    private val args by navArgs<OnboardFragmentArgs>()
+    private var _binding: OnboardBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel: WhatSaveViewModel by activityViewModel()
+
+    private lateinit var permissionRequest: ActivityResultLauncher<Uri?>
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        permissionRequest = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { result: Uri? ->
+            if (result != null && takePermissions(result)) {
+                viewModel.reloadAll()
+                updateButtons()
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = OnboardBinding(FragmentOnboardBinding.bind(view))
+        binding.nestedScrollView.applyWindowInsets(top = true, bottom = true, left = true, right = true)
+        binding.continueButton.applyWindowInsets(bottom = true, right = true, addedSpace = Space.viewMargin())
+
+        postponeEnterTransition()
+        enterTransition = MaterialFadeThrough().addTarget(view)
+        reenterTransition = MaterialFadeThrough().addTarget(view)
+        view.doOnPreDraw { startPostponedEnterTransition() }
+
+        binding.grantStorageButton.setOnClickListener(this)
+        binding.continueButton.setOnClickListener(this)
+        setupViews()
+        setupGrantButton()
+        setupDirectoryAccess()
+
+        statusesActivity.addPermissionsChangeListener(this)
+        getOnBackPressedDispatcher().addCallback(viewLifecycleOwner, onBackPressedCallback)
+    }
+
+    private fun setupViews() {
+        if (args.isFromSettings) {
+            binding.subtitle.isVisible = false
+        }
+    }
+
+    private fun setupGrantButton(hasPermissions: Boolean = hasStoragePermissions()) {
+        if (hasPermissions) {
+            binding.grantStorageButton.setIconResource(R.drawable.ic_round_check_24dp)
+            binding.grantStorageButton.setText(R.string.permission_granted)
+        } else {
+            binding.grantStorageButton.icon = null
+            binding.grantStorageButton.setText(R.string.grant_permissions)
+        }
+        binding.grantStorageButton.isEnabled = !hasPermissions
+    }
+
+    private fun setupDirectoryAccess() {
+        if (!IsSAFRequired) {
+            binding.directoryPermissionView.isGone = true
+        } else {
+            updateButtons()
+            binding.listDirectoriesButton.setOnClickListener {
+                val directories = getReadableDirectories()
+                viewModel.getReadableDirectoryPaths(directories).observe(viewLifecycleOwner) {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(R.string.accessible_directories)
+                        .setItems(it) { _: DialogInterface, position: Int ->
+                            val selectedDir = directories[position]
+                            MaterialAlertDialogBuilder(requireContext())
+                                .setTitle(R.string.revoke_permissions_title)
+                                .setMessage(R.string.revoke_directory_access_message)
+                                .setPositiveButton(R.string.revoke_action) { _: DialogInterface, _: Int ->
+                                    if (selectedDir.releasePermissions(requireContext())) {
+                                        showToast(R.string.permissions_revoked_successfully)
+                                        if (getReadableDirectories().isEmpty()) {
+                                            updateButtons()
+                                        }
+                                    }
+                                }
+                                .setNegativeButton(android.R.string.cancel, null)
+                                .show()
+                        }
+                        .setPositiveButton(R.string.close_action, null)
+                        .show()
+                }
+            }
+            binding.revokeDirectoryAccessButton.setOnClickListener {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.revoke_permissions_title)
+                    .setMessage(R.string.revoke_all_directories_access_message)
+                    .setPositiveButton(R.string.revoke_action) { _: DialogInterface, _: Int ->
+                        if (releasePermissions()) {
+                            showToast(R.string.permissions_revoked_successfully)
+                            updateButtons()
+                        }
+                    }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
+            }
+            binding.grantDirectoryAccessButton.setOnClickListener {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.how_to_title)
+                    .setView(
+                        DialogSafTutorialBinding.inflate(layoutInflater).also {
+                            it.textView.text = getString(R.string.saf_tutorial_1, WaDirectory.Media.path).formattedAsHtml()
+                        }.root
+                    )
+                    .setPositiveButton(R.string.got_it_action) { _: DialogInterface, _: Int ->
+                        permissionRequest.launch(null)
+                    }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
+            }
+        }
+    }
+
+    private fun updateButtons() {
+        val hasSAFPermissions = hasSAFPermissions()
+        binding.listDirectoriesButton.isVisible = hasSAFPermissions
+        binding.revokeDirectoryAccessButton.isVisible = hasSAFPermissions
+    }
+
+    override fun permissionsStateChanged(hasPermissions: Boolean) {
+        setupGrantButton(hasPermissions)
+        if (hasPermissions) {
+            viewModel.reloadAll()
+        }
+    }
+
+    override fun onClick(view: View) {
+        when (view) {
+            binding.grantStorageButton -> {
+                if (!hasStoragePermissions()) {
+                    requestWithoutOnboard()
+                }
+            }
+
+            binding.continueButton -> {
+                getOnBackPressedDispatcher().onBackPressed()
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.loadClients()
+    }
+
+    override fun onDestroyView() {
+        statusesActivity.removePermissionsChangeListener(this)
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun handleBackPress(): Boolean {
+        // WORKAROUND: Sometimes the callback is executed even when the fragment has already
+        // been removed, which is why some users got IllegalStateException errors.
+        // For now, we only have to manually check the state of the fragment and cancel the
+        // callback by returning 'true' when it is not visible.
+        if (!isVisible) return true
+        if (!hasPermissions()) {
+            MaterialAlertDialogBuilder(requireContext())
+                .setMessage(R.string.permissions_denied_message)
+                .setPositiveButton(R.string.continue_action) { _: DialogInterface, _: Int ->
+                    closeOnboard()
+                }
+                .setNegativeButton(R.string.grant_permissions, null)
+                .show()
+            return true
+        }
+        return false
+    }
+
+    private fun closeOnboard() {
+        if (isVisible) findNavController().popBackStack()
+    }
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (!handleBackPress()) {
+                remove()
+                getOnBackPressedDispatcher().onBackPressed()
+            }
+        }
+    }
+}

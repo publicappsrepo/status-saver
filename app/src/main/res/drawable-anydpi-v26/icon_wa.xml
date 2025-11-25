@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <background android:drawable="@color/client_icon_background_color" />
+    <foreground>
+        <aapt:attr name="android:drawable">
+            <vector
+                android:width="108dp"
+                android:height="108dp"
+                android:viewportWidth="108"
+                android:viewportHeight="108">
+                <path
+                    android:pathData="M42.78,69.19l-8.89,-30.38l5.34,0l6.06,21.94l6.04,-21.9l5.34,-0.04l6.06,21.94l6.04,-21.94l5.34,0l-8.87,30.38l-5.02,0l-6.23,-21.6l-6.19,21.6z"
+                    android:fillColor="@color/client_icon_tint_color"
+                    android:fillType="nonZero" />
+            </vector>
+        </aapt:attr>
+    </foreground>
+</adaptive-icon>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="@integer/overScrollMode"
+        android:scrollbars="none"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/onboard_titles_vertical_padding"
+                android:paddingStart="@dimen/onboard_titles_horizontal_padding"
+                android:paddingEnd="@dimen/onboard_titles_horizontal_padding"
+                android:drawableTop="@drawable/ic_lock_open_40dp"
+                android:drawablePadding="16dp"
+                android:textAlignment="center"
+                android:textAppearance="?textAppearanceHeadline5"
+                android:text="@string/grant_permissions"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/onboard_titles_horizontal_padding"
+                android:paddingEnd="@dimen/onboard_titles_horizontal_padding"
+                android:ellipsize="end"
+                android:textAlignment="center"
+                android:textAppearance="?textAppearanceSubtitle1"
+                android:text="@string/storage_permission_label"/>
+
+            <include
+                android:id="@+id/storagePermissionView"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/onboard_titles_vertical_padding"
+                android:layout_marginStart="@dimen/onboard_titles_horizontal_padding"
+                android:layout_marginEnd="@dimen/onboard_titles_horizontal_padding"
+                layout="@layout/storage_permission_view"/>
+
+            <include
+                android:id="@+id/directoryPermissionView"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="@dimen/onboard_titles_horizontal_padding"
+                android:layout_marginEnd="@dimen/onboard_titles_horizontal_padding"
+                layout="@layout/directory_permission_view"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/continueButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|end"
+        android:contentDescription="@string/continue_action"
+        app:srcCompat="@drawable/ic_round_check_24dp"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

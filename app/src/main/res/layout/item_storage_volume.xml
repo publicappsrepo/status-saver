@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/m3_list_padding_horizontal"
+    android:paddingEnd="@dimen/m3_list_padding_horizontal"
+    android:background="?selectableItemBackground"
+    android:descendantFocusability="blocksDescendants">
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/radio_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/m3_one_line_list_height"
+        android:clickable="false"
+        android:focusable="false"
+        android:maxLines="1"
+        android:paddingStart="@dimen/m3_list_padding_horizontal"
+        android:textAppearance="?textAppearanceBody1"
+        tools:text="@tools:sample/lorem"
+        tools:checked="true" />
+
+</FrameLayout>

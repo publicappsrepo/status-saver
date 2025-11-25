@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.appsease.status.saver.views.PhotoViewWrapper xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blackSurfaceColor">
+
+    <io.getstream.photoview.PhotoView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:importantForAccessibility="no"
+        android:scaleType="centerInside"
+        tools:src="@tools:sample/backgrounds/scenic[2]" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <include
+            android:id="@+id/playback_action_button"
+            layout="@layout/playback_action_button" />
+
+    </FrameLayout>
+
+</com.appsease.status.saver.views.PhotoViewWrapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.appsease.status.saver.views.SwitchWithContainer
+        android:id="@+id/switchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/switch_horizontal_padding"
+        android:paddingTop="20dp"
+        android:paddingBottom="8dp"
+        android:text="@string/use_message_view"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:overScrollMode="@integer/overScrollMode"
+            tools:itemCount="0"
+            tools:listitem="@layout/item_conversation"/>
+
+        <include
+            android:id="@+id/empty_conversations_view"
+            layout="@layout/empty_conversations_view"/>
+
+    </FrameLayout>
+
+</LinearLayout>

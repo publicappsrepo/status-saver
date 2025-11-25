@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<resources>
+    <dimen name="msg_a_number_padding_horizontal">24dp</dimen>
+</resources>

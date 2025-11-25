@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="?dialogPreferredPadding"
+    android:paddingStart="?dialogPreferredPadding"
+    android:paddingEnd="?dialogPreferredPadding">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@android:id/message"
+        style="?materialAlertDialogBodyTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:textAlignment="viewStart"
+        tools:text="@string/delete_conversation_confirmation"/>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/blacklist_sender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingStart="16dp"
+        android:background="?rectSelector"
+        android:textAlignment="viewStart"
+        android:textAppearance="?textAppearanceBody2"
+        tools:text="@string/blacklist_sender"/>
+
+</LinearLayout>
