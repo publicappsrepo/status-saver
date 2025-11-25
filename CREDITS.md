@@ -15,7 +15,7 @@ This app is based on **WhatSave** by Christians Martínez A. (mardous)
 All third-party libraries used in this project are listed in `app/build.gradle` with their respective licenses.
 
 ## Contributors
-- Appsease - Developer and Maintainer
+- Appsease / Akshay - Developer and Maintainer
 
 ## Acknowledgments
 Special thanks to Christians Martínez A. for creating WhatSave, which served as the foundation for this project.
